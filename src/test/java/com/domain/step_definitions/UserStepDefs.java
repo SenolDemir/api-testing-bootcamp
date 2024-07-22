@@ -1,10 +1,13 @@
 package com.domain.step_definitions;
 
 import com.domain.pages.UserModel;
+import com.domain.pages.UserPOJO;
 import com.domain.utilities.ConfigurationReader;
+import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import java.util.Map;
@@ -18,7 +21,8 @@ public class UserStepDefs {
 
     Response response;
     UserModel userModel = new UserModel();
-    String url = ConfigurationReader.get("baseUri");
+    Faker faker = new Faker();
+
 
 
 
@@ -32,9 +36,12 @@ public class UserStepDefs {
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
                 .body(newUser)
-                .when().post(url+"/user");
+                .when()
+                .post("/user");
 
         response.prettyPrint();
+
+
     }
 
 
