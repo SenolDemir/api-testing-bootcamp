@@ -1,41 +1,58 @@
 package com.domain.step_definitions;
 
+
+import com.domain.pages.Context;
+import com.domain.pages.ScenarioContext;
+import com.domain.pages.User;
 import com.domain.pages.UserModel;
-import com.domain.pages.UserPOJO;
-import com.domain.utilities.ConfigurationReader;
 import com.github.javafaker.Faker;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Header;
+import io.restassured.http.Headers;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.junit.Assert;
+
+import java.util.HashMap;
 import java.util.Map;
+
 import static io.restassured.RestAssured.*;
-import static io.restassured.matcher.RestAssuredMatchers.*;
-import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 
 public class UserStepDefs {
 
     Response response;
-    UserModel userModel = new UserModel();
     Faker faker = new Faker();
 
+    UserModel userModel = new UserModel();
+    User userBody = new User();
 
 
 
-    @When("I send a valid user information")
-    public void iSendAValidUserInformation() {
+
+    @When("I send a request to create a new user with valid information")
+    public void iSendARequestToCreateANewUserWithValidInformation() {
 
 
-        Map<String, Object> newUser = userModel.createUser();
+        userBody.setId(faker.number().numberBetween(1, 50));
+        userBody.setUsername(faker.name().username());
+        userBody.setFirstName(faker.name().firstName());
+        userBody.setLastName(faker.name().lastName());
+        userBody.setEmail(faker.internet().emailAddress());
+        userBody.setPassword(faker.internet().password());
+        userBody.setPhone(String.valueOf(faker.number().digits(10)));
+        userBody.setUserStatus(faker.number().numberBetween(1, 10));
 
-        response = given()
+        ScenarioContext.setScenarioContext(Context.USERNAME, userBody.getUsername());
+        ScenarioContext.setScenarioContext(Context.ID, userBody.getId());
+        
+        response = given().log().all()
                 .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(newUser)
+                .body(userBody)
                 .when()
                 .post("/user");
 
@@ -45,16 +62,126 @@ public class UserStepDefs {
     }
 
 
-
     @Then("new user should be created")
     public void new_user_should_be_created() {
 
         assertEquals(200, response.statusCode());
         assertEquals("application/json", response.contentType());
 
+    }
+
+
+    @When("I send request to read user information by {string}")
+    public void iSendRequestToReadUserInformationBy(String username) {
+
+
+        username = ScenarioContext.getScenarioContext(Context.USERNAME).toString();
+        response = given().log().all()
+                .accept(ContentType.JSON)
+                .and()
+                .contentType(ContentType.JSON)
+                .pathParam("username", username)
+                .when()
+                .get("user/{username}");
+
+        response.prettyPrint();
+
+    }
+
+    @Then("user information by {string} should be displayed")
+    public void userInformationByShouldBeDisplayed(String username) {
+
+        username = ScenarioContext.getScenarioContext(Context.USERNAME).toString();
+        int id = ((Integer) ScenarioContext.getScenarioContext(Context.ID));
+
+
+        JsonPath jsonPath = response.jsonPath();
+
+        assertEquals(200, response.getStatusCode());
+        assertEquals("application/json",  response.contentType());
+
+        assertEquals(username, jsonPath.getString("username"));
+        assertEquals(id, jsonPath.getInt("id"));
+        assertTrue(jsonPath.getString("email").contains("@"));
+
+        ScenarioContext.setScenarioContext(Context.FIRSTNAME, jsonPath.getString("firstName"));
+        ScenarioContext.setScenarioContext(Context.LASTNAME, jsonPath.getString("lastName"));
+        ScenarioContext.setScenarioContext(Context.EMAIL, jsonPath.getString("email"));
 
 
     }
 
+    @When("I send request to update user information by {string}")
+    public void iSendRequestToUpdateUserInformationBy(String username) {
 
+        username = ScenarioContext.getScenarioContext(Context.USERNAME).toString();
+        int id = ((Integer) ScenarioContext.getScenarioContext(Context.ID));
+
+        Map<String, Object> user = new HashMap<>();
+        user.put("id", id);
+        user.put("username", username);
+        user.put("firstName", faker.name().firstName());
+        user.put("lastName", faker.name().lastName());
+        user.put("email", faker.internet().emailAddress());
+        user.put("password", faker.internet().password());
+        user.put("phone", String.valueOf(faker.number().digits(10)));
+        user.put("userStatus", faker.number().numberBetween(5, 50));
+
+        response = given().log().all()
+                .accept(ContentType.JSON)
+                .and()
+                .contentType(ContentType.JSON)
+                .pathParam("username", username)
+                .body(user)
+                .when()
+                .put("user/{username}");
+
+        response.prettyPrint();
+
+
+    }
+
+    @Then("user information by {string} should be updated")
+    public void userInformationByShouldBeUpdated(String username) {
+
+        JsonPath jsonPath = response.jsonPath();
+
+        username = ScenarioContext.getScenarioContext(Context.USERNAME).toString();
+        int id = ((Integer) ScenarioContext.getScenarioContext(Context.ID));
+
+        assertEquals(200, response.getStatusCode());
+        assertEquals("application/json",  response.contentType());
+        assertEquals(id,  jsonPath.getInt("message"));
+
+    }
+
+    @When("I send request to delete user by {string}")
+    public void iSendRequestToDeleteUserBy(String username) {
+
+        username = ScenarioContext.getScenarioContext(Context.USERNAME).toString();
+        response = given().log().all()
+                .accept(ContentType.JSON)
+                .and()
+                .contentType(ContentType.JSON)
+                .pathParam("username", username)
+                .when()
+                .delete("user/{username}");
+
+        response.prettyPrint();
+
+    }
+
+    @Then("user information by {string} should be deleted")
+    public void userInformationByShouldBeDeleted(String username) {
+
+        username = ScenarioContext.getScenarioContext(Context.USERNAME).toString();
+
+        JsonPath jsonPath = response.jsonPath();
+
+        assertEquals(200, response.getStatusCode());
+        assertEquals("application/json",  response.contentType());
+        assertEquals(username,  jsonPath.getString("message"));
+
+
+    }
 }
