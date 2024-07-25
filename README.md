@@ -5,7 +5,7 @@ A bootcamp project based on Cucumber BDD Framework with Rest Assured
 ## Prerequisites
 
 #### System Requirements
-Java 8+ JDK
+Java 8+ JDK <br>
 Apache Maven (to be able to run tests by command line)
 
 #### Recommended Plugins for IDE
