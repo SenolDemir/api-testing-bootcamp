@@ -14,4 +14,4 @@ Gherkin from JetBrains
 Lombok
 
 ## Environment: 
-`(https://petstore.swagger.io/)`
+`https://petstore.swagger.io/`
