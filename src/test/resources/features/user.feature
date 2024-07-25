@@ -11,6 +11,16 @@ Feature: User Functions
     When I send request to read user information by "username"
     Then user information by "username" should be displayed
 
+ @login
+  Scenario: Created user should log in successfully
+    When user send valid "username" and "password"
+    Then user should logged in successfully
+
+   @login
+  Scenario: Created user should log out successfully
+    When user send request to log out
+    Then user should logged out successfully
+
   @crud
   Scenario: Update created user information
     When I send request to update user information by "username"
