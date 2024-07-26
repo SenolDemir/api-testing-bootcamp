@@ -15,3 +15,8 @@ Lombok
 
 ## Environment: 
 `https://petstore.swagger.io/`
+
+
+pet feature
+
+file upload operation done

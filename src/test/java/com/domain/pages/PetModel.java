@@ -21,6 +21,7 @@ public class PetModel {
 
     public List<Tag> generateTag(int count){
         List<Tag> data = new ArrayList<>();
+
         for (int i = 0; i < count ; i++) {
             Tag tag = new Tag();
             tag.setId(generateRandomId());
