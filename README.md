@@ -10,13 +10,16 @@ Apache Maven (to be able to run tests by command line)
 
 #### Recommended Plugins for IDE
 Cucumber for Java from JetBrains\
-Gherkin from JetBrains
+Gherkin from JetBrains\
 Lombok
 
 ## Environment: 
 `https://petstore.swagger.io/`
 
 
-pet feature
+## pet feature 
 
-file upload operation done
+[file upload operation done](step_definitions/PetStepDefs.java:102)\
+update operation with form-data done
+
+
