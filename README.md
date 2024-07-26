@@ -8,21 +8,25 @@ A bootcamp project based on Cucumber BDD Framework with Rest Assured to implemen
 ## Prerequisites
 
 #### System Requirements
-Java 8+ JDK\
-Apache Maven (to be able to run tests by command line)
+- Java 8+ JDK\
+- Apache Maven (to be able to run tests by command line)
 
 #### Recommended Plugins for IDE
-Cucumber for Java from JetBrains\
-Gherkin from JetBrains\
-Lombok
+- Cucumber for Java from JetBrains\
+- Gherkin from JetBrains\
+- Lombok
 
 ## Environment: 
 `https://petstore.swagger.io/`
 
+## Features, Contents
 
-## pet feature 
+### user features
+- CRUD operations implemented
+- login functions with api key implemented
 
-[file upload operation done](com/domain/step_definitions/PetStepDefs.java:102)\
-update operation with form-data done
+### pet features
+- file upload operation implemented\
+- update operation with form-data implemented
 
 
