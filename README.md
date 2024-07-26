@@ -1,6 +1,9 @@
 # API TESTING BOOTCAMP
 
-A bootcamp project based on Cucumber BDD Framework with Rest Assured
+A bootcamp project based on Cucumber BDD Framework with Rest Assured to implement fundementals of API Testing.
+
+- Build Tool: Maven
+- Test Framework: Cucumber BBD (with Rest Assured and JUnit Assertions)
 
 ## Prerequisites
 
