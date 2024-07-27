@@ -20,3 +20,8 @@ Feature: Pet Model Functions
   Scenario: User should be able to delete pet with given id
     When user send delete request for pet with given id
     Then pet information should be deleted
+
+    @status
+    Scenario: User should be able to read pets information by given status
+      When logged user sent get request to read pets by "available" status
+      Then pet records should be displayed by status

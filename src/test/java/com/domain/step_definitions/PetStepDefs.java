@@ -13,6 +13,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import java.io.File;
+import java.util.List;
 
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
@@ -208,6 +209,44 @@ public class PetStepDefs {
                 .statusCode(200)
                 .and()
                 .assertThat().body("message", equalTo(petId));
+
+
+    }
+
+    @When("logged user sent get request to read pets by status")
+    public void loggedUserSentGetRequestToReadPetsByStatus() {
+
+
+
+
+    }
+
+
+    @When("logged user sent get request to read pets by {string} status")
+    public void loggedUserSentGetRequestToReadPetsByStatus(String status) {
+
+        response = given().log().all()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .and()
+                .header("api_key", "special-key")
+                .and()
+                .queryParam("status", status)
+                .when().get("/pet/findByStatus");
+
+        response.prettyPrint();
+    }
+
+    @Then("pet records should be displayed by status")
+    public void petRecordsShouldBeDisplayedByStatus() {
+
+        JsonPath jsonPath = response.jsonPath();
+
+        List<String> petList = jsonPath.getList("id");
+        List<String> statusList = jsonPath.getList("status");
+
+       assertTrue(petList.size()==statusList.size());
+
 
 
     }

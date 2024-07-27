@@ -31,6 +31,12 @@ public class PetModel {
         return data;
     }
 
+    public String setrandomStatus(){
+        int rnd = (int) Math.floor(Math.random()*10)+1;
+        String [] status = {"available", "pending", "sold"};
+        return status[rnd];
+    }
+
     public Pet createPed(){
 
         Pet pet = new Pet();
@@ -46,7 +52,7 @@ public class PetModel {
 
         pet.setPhotoUrls(Arrays.asList(faker.internet().url(), faker.internet().url()));
         pet.setTags(generateTag(3));
-        pet.setStatus("available");
+        pet.setStatus(setrandomStatus());
 
         return pet;
     }
