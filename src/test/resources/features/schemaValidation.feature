@@ -5,7 +5,7 @@ Feature: Schema Validation
 #  to make validation we need to get a response body from API.
 #  so that, we use user create scenario to have a json body to validate with scheme
 #  the last step is particular validation step, others come from user.feature
-#  so that, validation step defined in user step class
+#  so that, validation step defined in user step definition class
 
 
   Scenario: Create a new user

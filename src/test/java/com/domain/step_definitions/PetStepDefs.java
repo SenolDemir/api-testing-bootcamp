@@ -3,7 +3,6 @@ package com.domain.step_definitions;
 import com.domain.pages.Context;
 import com.domain.pages.PetModel;
 import com.domain.pages.ScenarioContext;
-import com.domain.pages.pet.pojo.Pet;
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -16,7 +15,6 @@ import java.io.File;
 import java.util.List;
 
 import static io.restassured.RestAssured.*;
-import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -209,14 +207,6 @@ public class PetStepDefs {
                 .statusCode(200)
                 .and()
                 .assertThat().body("message", equalTo(petId));
-
-
-    }
-
-    @When("logged user sent get request to read pets by status")
-    public void loggedUserSentGetRequestToReadPetsByStatus() {
-
-
 
 
     }

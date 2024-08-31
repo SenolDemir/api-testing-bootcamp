@@ -12,12 +12,15 @@ import java.util.List;
 public class PetModel {
 
 
+
+
     Faker faker = new Faker();
 
 
     public int generateRandomId(){
         return faker.number().numberBetween(1,1000);
     }
+
 
     public List<Tag> generateTag(int count){
         List<Tag> data = new ArrayList<>();
