@@ -36,7 +36,7 @@ The project designed in Page Object Model and Singleton pattern implemented to s
 - the repsonse validdated with the schema which has added to the project root directory
 
 ### Scenario Context Feature
-- Due to structure of Cucumber Framework the content of one scenario can not stored by known object craetion way.
+- Due to structure of Cucumber Framework the content of one scenario can not stored to use in another scenario by known object craetion way.
 - To hanlde this, to Context classes created in pages and test data from response stored there to use in different test scenarios
 
 
